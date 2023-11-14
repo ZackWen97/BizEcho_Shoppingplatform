@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface UserService {
     User registerUser(User newUser);
     Optional<User> findByUsername(String username);
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     // 其他业务方法...
 }
