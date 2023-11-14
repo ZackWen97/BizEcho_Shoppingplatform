@@ -20,8 +20,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     @Override
     public User registerUser(User newUser) {
         // 检查用户名是否已存在
@@ -40,13 +38,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
+        return Optional.ofNullable(userRepository.findByUsername(username)).orElse(null);
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email));
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
+
+
 
     // 其他服务方法...
 }

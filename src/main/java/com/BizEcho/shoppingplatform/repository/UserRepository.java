@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     // 这里可以定义一些根据用户名、邮箱等查找用户的方法，例如：
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
     User findByEmail(String email);
 
     // 可以根据需要添加更多的查询方法

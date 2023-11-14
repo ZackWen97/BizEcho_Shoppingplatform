@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.BizEcho.shoppingplatform.entity.User;
@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
@@ -49,10 +51,41 @@ public class UserServiceImplTest {
         // 验证交互
         verify(userRepository).save(any(User.class));
         verify(passwordEncoder).encode("password");
-
         // 断言结果
         assertEquals("testUser", registeredUser.getUsername());
         assertEquals("encryptedPassword", registeredUser.getPassword());
         // ... 其他断言
     }
+
+    @Test
+    void findByUsername_ShouldReturnUser_WhenUserExists() {
+        // Arrange
+        User expectedUser = new User();
+        expectedUser.setUsername("existingUser");
+        when(userRepository.findByUsername("existingUser")).thenReturn(Optional.of(expectedUser));
+
+        // Act
+        Optional<User> actualUser = userService.findByUsername("existingUser");
+
+        // Assert
+        assertTrue(actualUser.isPresent());
+        assertEquals(expectedUser.getUsername(), actualUser.get().getUsername());
+    }
+
+    @Test
+    void findByEmail_ShouldReturnUser_WhenUserExists() {
+        // Arrange
+        User expectedUser = new User();
+        expectedUser.setEmail("existing@example.com");
+        when(userRepository.findByEmail("existing@example.com")).thenReturn(expectedUser);
+
+        // Act
+        User actualUser = userService.findByEmail("existing@example.com");
+
+        // Assert
+        assertNotNull(actualUser); // 确保返回的用户不是null
+        assertEquals(expectedUser.getEmail(), actualUser.getEmail()); // 确保返回的用户有正确的电子邮件地址
+    }
+
+
 }

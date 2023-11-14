@@ -41,9 +41,9 @@ public class UserController {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<?> findByEmail(@PathVariable String email) {
-        Optional<User> user = userService.findByEmail(email);
-        if(user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+        User user = userService.findByEmail(email);
+        if(user!=null) {
+            return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.notFound().build();
         }

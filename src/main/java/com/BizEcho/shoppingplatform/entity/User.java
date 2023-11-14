@@ -38,6 +38,11 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+
+    public String getEmail() {
+        return this.email;
+    }
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
